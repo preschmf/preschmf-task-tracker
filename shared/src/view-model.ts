@@ -1,0 +1,17 @@
+export namespace ViewModels {
+  export enum TaskStatus {
+    notComplete = 'notComplete',
+    complete = 'complete',
+  }
+
+  export interface Task {
+    taskId: string
+    title: string
+    status: TaskStatus
+  }
+
+  export interface Board {
+    boardId: string
+    title: string
+  }
+}

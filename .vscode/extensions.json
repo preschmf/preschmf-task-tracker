@@ -1,0 +1,4 @@
+{
+  "recommendations": ["esbenp.prettier-vscode", "qwtel.sqlite-viewer"],
+  "unwantedRecommendations": []
+}
