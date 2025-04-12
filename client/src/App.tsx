@@ -1,5 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Tracker from '../components/Tracker'
+import LogInPage from '../components/LoginPage'
+import axios from 'axios'
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
 const queryClient = new QueryClient()
@@ -10,10 +13,32 @@ const backGroundStyle = {
 }
 
 const App = () => {
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    const getUser = async () => {
+      const response = await axios.get('/api/v1/login/success', {
+        method: 'GET',
+        withCredentials: true,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      })
+      const data = response.data
+      console.log(data)
+      setUser(data.user)
+    }
+    getUser()
+  }, [])
   return (
     <QueryClientProvider client={queryClient}>
       <div style={backGroundStyle}>
-        <Tracker />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Tracker />} />
+            <Route path="/login" element={user ? <Navigate to="/" /> : <LogInPage />} />
+          </Routes>
+        </BrowserRouter>
       </div>
     </QueryClientProvider>
   )

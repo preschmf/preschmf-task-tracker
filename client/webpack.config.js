@@ -1,6 +1,4 @@
 const path = require('path')
-const CopyPlugin = require('copy-webpack-plugin')
-
 const outputDirectory = path.resolve(__dirname, 'public')
 
 module.exports = {
@@ -9,6 +7,7 @@ module.exports = {
   output: {
     path: outputDirectory,
     filename: 'main.js',
+    publicPath: '/',
   },
   target: 'web',
   devServer: {
@@ -17,6 +16,7 @@ module.exports = {
     open: true,
     hot: true,
     liveReload: true,
+    historyApiFallback: true,
     proxy: {
       '/api': 'http://localhost:8080',
     },
