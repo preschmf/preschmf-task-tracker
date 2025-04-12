@@ -1,0 +1,135 @@
+{
+  "info": {
+    "_postman_id": "a03e74d3-b710-4232-8e14-0041671caa19",
+    "name": "Task Tracker",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Get Boards",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/board",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "board"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create board",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Calendar actions\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/board",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "board"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get tasks",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/api/v1/board/b_sktwieuslkt65n11/task",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "board", "b_sktwieuslkt65n11", "task"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create task",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Go grocery shopping\", \"status\": \"notCompleted\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/board/b_sktwieuslkt65n11/task",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "board", "b_sktwieuslkt65n11", "task"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Uncomplete task",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Go grocery shopping\", \"status\": \"notCompleted\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/task/t_sktwiqoglktwkzo8/uncomplete",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "task", "t_sktwiqoglktwkzo8", "uncomplete"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Complete task",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"title\": \"Go grocery shopping\", \"status\": \"notCompleted\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/v1/task/t_sktwiqoglktwkzo8/complete",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "v1", "task", "t_sktwiqoglktwkzo8", "complete"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
