@@ -18,13 +18,13 @@ This app spiraled to quite a large size, larger than I thought a task tracking a
 
 ## Screenshots
 
-Login Page:
+### Login Page:
 ![image](https://github.com/user-attachments/assets/1fdbf0b2-48ca-4bc0-bd19-233af38a2134)
 
-Boards Page with Task Creation: 
+### Boards Page with Task Creation: 
 ![image](https://github.com/user-attachments/assets/cdeb8ad8-7879-4ea7-8024-e5b6a41c9a72)
 
-Boards Page with Board Creation:
+### Boards Page with Board Creation:
 ![image](https://github.com/user-attachments/assets/fd458953-4cec-4f52-9372-85a2f4c22a4a)
 
 
