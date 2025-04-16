@@ -8,7 +8,7 @@ This is a full-stack task tracker/todo list app. It is a monorepo app that uses:
 The app uses [passport.js](https://www.passportjs.org/) to implement OAuth2.0 for authentication of a user with either GitHub, Google, or Facebook strategies. The user can then create boards and tasks on those boards. [Knex](https://knexjs.org/) is used to construct queries made to the [SQLite](https://sqlite.org/) database. Every board and task are stored in the database in order to persist data after each login. 
 
 ## Why this app?
-I created this app for three mains reasons:
+I created this app for three main reasons:
 * To get more practice with SQL databases
 * To explore implementing OAuth and using it to authenticate a user and persist data 
 * To explore creating, and maintaining, a monorepo project
