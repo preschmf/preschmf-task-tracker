@@ -3,3 +3,4 @@ build
 coverage
 server/task-tracker.local.sqlite3
 public/main.js
+.env
