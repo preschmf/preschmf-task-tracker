@@ -10,6 +10,15 @@ export namespace Requests {
     status: ViewModels.TaskStatus
     scheduledDate?: string
   }
+
+  export interface CreateUserRequest {
+    username: string
+    profileId: string
+  }
+
+  export interface GetUserRequest {
+    id: string
+  }
 }
 
 export namespace Responses {
@@ -27,6 +36,14 @@ export namespace Responses {
 
   export interface CreateTaskResponse {
     task: ViewModels.Task
+  }
+
+  export interface CreateUserResponse {
+    user: ViewModels.User
+  }
+
+  export interface GetUserResponse {
+    user: ViewModels.User
   }
 
   export interface GenericResponse {

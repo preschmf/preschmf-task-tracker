@@ -19,10 +19,6 @@ const App = () => {
       const response = await axios.get('/api/v1/login/success', {
         method: 'GET',
         withCredentials: true,
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
       })
       const data = response.data
       console.log(data)

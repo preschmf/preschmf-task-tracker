@@ -13,7 +13,7 @@ const TaskList = ({ board }: { board: ViewModels.Board }) => {
 
   const taskListQuery = useQuery({
     queryFn: () => {
-      return axios.get(`/api/v1/board/${board?.boardId}/task`)
+      return axios.get(`/api/v1/board/${board?.boardId}/task`, { withCredentials: true })
     },
     refetchOnWindowFocus: false,
     queryKey: ['task-list', board?.boardId],
@@ -24,6 +24,7 @@ const TaskList = ({ board }: { board: ViewModels.Board }) => {
       return axios.post(`/api/v1/board/${board.boardId}/task`, {
         title,
         status: ViewModels.TaskStatus.notComplete,
+        withCredentials: true,
       })
     },
   })
@@ -31,9 +32,9 @@ const TaskList = ({ board }: { board: ViewModels.Board }) => {
   const changeTaskStatusMutation = useMutation({
     mutationFn: (task: ViewModels.Task) => {
       if (task.status === ViewModels.TaskStatus.notComplete) {
-        return axios.patch(`/api/v1/task/${task.taskId}/complete`)
+        return axios.patch(`/api/v1/task/${task.taskId}/complete`, { withCredentials: true })
       } else if (task.status === ViewModels.TaskStatus.complete) {
-        return axios.patch(`/api/v1/task/${task.taskId}/uncomplete`)
+        return axios.patch(`/api/v1/task/${task.taskId}/uncomplete`, { withCredentials: true })
       }
       throw new Error('task status is invalid or could not be retrieved')
     },

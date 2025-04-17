@@ -30,7 +30,7 @@ export const CreateBoardModal = ({ open, onBoardCreated, onClose }: CreateBoardM
       centered
       id="modal-create-board"
       show={open}
-      dialogTitle="Create Board"
+      dialogtitle="Create Board"
       onShow={async () => {
         setTitle('')
         setIsCreating(false)
@@ -68,6 +68,6 @@ interface CreateBoardResponse {
 }
 
 const createBoard = async (title: string): Promise<CreateBoardResponse> => {
-  const response = await axios.post('/api/v1/board', { title })
+  const response = await axios.post('/api/v1/board', { title, withCredentials: true })
   return response.data
 }

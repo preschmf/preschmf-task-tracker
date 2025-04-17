@@ -21,7 +21,9 @@ export namespace DomainModels {
   }
 
   export interface User {
+    id: string
     userId: string
-    name: string
+    username: string
+    createdAt: string
   }
 }

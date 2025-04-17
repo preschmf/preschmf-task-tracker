@@ -14,4 +14,9 @@ export namespace ViewModels {
     boardId: string
     title: string
   }
+
+  export interface User {
+    userId: string
+    username: string
+  }
 }

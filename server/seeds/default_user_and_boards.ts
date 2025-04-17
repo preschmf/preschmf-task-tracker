@@ -8,8 +8,10 @@ export async function seed(knex: Knex): Promise<void> {
 
   // Inserts seed entries
   const user: DomainModels.User = {
-    userId: getUserId(),
-    name: 'Local User',
+    id: getUserId(),
+    userId: '12345678' + 'githubuser',
+    createdAt: new Date().toISOString(),
+    username: 'githubuser',
   }
   await knex('user').insert([user])
 

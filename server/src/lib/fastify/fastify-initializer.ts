@@ -7,16 +7,23 @@ import { pingController, pingPath } from '../controller/ping.controller'
 import { taskCompleteController } from '../controller/task/task-complete.controller'
 import { fastifyErrorHandler } from './fastify-handlers'
 import { taskUncompleteController } from '../controller/task/task-uncomplete.controller'
+import { userGetController, userPath } from '../controller/user/user-get.controller'
+import { userCreateController } from '../controller/user/user-create.controller'
+import { userRepository } from '../data-access/user.repository'
+import userService from '../service/user.service'
 import fastifySecureSession from '@fastify/secure-session'
 import fastifyPassport from '@fastify/passport'
 import { RouteController } from '../controller'
 import fs from 'fs'
 import { Strategy as GitHubStrategy } from 'passport-github2'
+import { DomainModels } from '../domain-model'
+import ensureAuthenticated from '../helpers/ensureAuthenticated'
 
-const port = 8080
-const GITHUB_CLIENT_ID = 'Ov23liarxK82gdExYThG'
-const GITHUB_CLIENT_SECRET = '14e1cd918bf0f2ee2c4a84fb708349476c59ca77'
-const CLIENT_URL = 'http://localhost:9000'
+const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
+const gitHubClientId = process.env.GITHUB_CLIENT_ID || ''
+const gitHubClientSecret = process.env.GITHUB_CLIENT_SECRET || ''
+const baseUrl = process.env.BASE_URL || 'http://localhost:8080'
+const clientUrl = process.env.CLIENT_URL || 'http://localhost:9000'
 
 export const initialize = async (server: FastifyInstance) => {
   registerRoutes(server)
@@ -26,6 +33,9 @@ export const initialize = async (server: FastifyInstance) => {
 const registerRoutes = (server: FastifyInstance) => {
   server.register(fastifySecureSession, {
     key: fs.readFileSync('./src/lib/fastify/not-so-secret-key'),
+    // check into possibly adding:
+    // httpOnly: true
+    // secure: process.env.NODE_ENV === 'production'
     cookie: {
       path: '/',
     },
@@ -36,67 +46,124 @@ const registerRoutes = (server: FastifyInstance) => {
     'github',
     new GitHubStrategy(
       {
-        clientID: GITHUB_CLIENT_ID,
-        clientSecret: GITHUB_CLIENT_SECRET,
-        callbackURL: `http://localhost:${port}/api/v1/auth/github/callback`,
+        clientID: gitHubClientId,
+        clientSecret: gitHubClientSecret,
+        callbackURL: `${baseUrl}/api/v1/auth/github/callback`,
       },
-      (accessToken, refreshToken, profile, callback) => {
-        // Verify function: Called after GitHub authentication
-        // Check if user exists or create a new one if not
-        //store user in the db
-        callback(undefined, profile)
+      async (accessToken: string, refreshToken: string, profile: any, callback: Function) => {
+        try {
+          const userId = profile.id + profile.username
+
+          const user = await userRepository.findByUserId(userId)
+          console.log('userQuery results: ' + JSON.stringify(user))
+
+          if (user) {
+            return callback(undefined, user)
+          } else {
+            const newUser = await userService.createUser(profile.id, profile.username)
+            return callback(undefined, newUser)
+          }
+        } catch (error) {
+          console.error('Error during GitHub authentication:', error)
+          return callback(error)
+        }
       }
     )
   )
 
-  fastifyPassport.registerUserDeserializer(async (user, req) => {
-    //get user from db here
-    //return user
-    return user //since we stored the whole user in session, now we can get user from req.user in any route
+  fastifyPassport.registerUserDeserializer(async (id: string, req) => {
+    try {
+      const user = await userRepository.findById(id)
+      if (!user) {
+        throw new Error(`User with id:${id} not found`)
+      }
+      return user
+    } catch (error) {
+      console.error('Error in deserializer:', error)
+      throw error
+    }
   })
 
-  fastifyPassport.registerUserSerializer(async (user, req) => {
-    return user
+  fastifyPassport.registerUserSerializer(async (user: DomainModels.User, req) => {
+    return user.id
   })
 
   server.get('/api/v1/login/failure', (req, res) => {
     res.status(401).send({ success: false, message: 'Login failed' })
   })
   server.get('/api/v1/login/success', (req, res) => {
+    if (!req.isAuthenticated() || !req.user) {
+      return res.status(401).send({ success: false, message: 'User not authenticated' })
+    }
     res.status(200).send({ success: true, message: 'Login successful', user: req.user })
   })
   server.get('/api/v1/logout', (req, res) => {
     req.logout()
-    res.redirect(`${CLIENT_URL}/login`)
+    res.redirect(`${clientUrl}/login`)
   })
 
   server.get(
     '/api/v1/auth/github',
     { preValidation: fastifyPassport.authenticate('github', { scope: ['profile'] }) },
-    async (req, res) => {
-      // This route is used to initiate GitHub authentication
-      // The user will be redirected to GitHub for login
-    }
+    async (req, res) => {}
   )
 
   server.get(
     '/api/v1/auth/github/callback',
     {
       preValidation: fastifyPassport.authenticate('github', {
-        successRedirect: CLIENT_URL,
-        //redirect to failure page for now
-        failureRedirect: `${CLIENT_URL}/login`,
+        successRedirect: clientUrl,
+        failureRedirect: `${clientUrl}/login`,
       }),
     },
     async (req, res) => {
-      // Handle the callback logic here if needed
+      // Handle login failure logic here
     }
   )
+
   server.get(pingPath, pingController)
-  server.get(boardListPath, boardListController)
-  server.post(boardCreatePath, boardCreateController)
-  server.get(taskListPath, taskListController)
-  server.post(taskCreatePath, taskCreateController)
+  server.get(
+    boardListPath,
+    {
+      preValidation: ensureAuthenticated,
+    },
+    boardListController
+  )
+  server.post(
+    boardCreatePath,
+    {
+      preValidation: ensureAuthenticated,
+    },
+    boardCreateController
+  )
+  server.get(
+    taskListPath,
+    {
+      preValidation: ensureAuthenticated,
+    },
+    taskListController
+  )
+  server.post(
+    taskCreatePath,
+    {
+      preValidation: ensureAuthenticated,
+    },
+    taskCreateController
+  )
+  server.get(
+    userPath,
+    {
+      preValidation: ensureAuthenticated,
+    },
+    userGetController
+  )
+  server.post(
+    userPath,
+    {
+      preValidation: ensureAuthenticated,
+    },
+    userCreateController
+  )
   registerControllerAsRoute(server, taskCompleteController)
   registerControllerAsRoute(server, taskUncompleteController)
 }
@@ -109,7 +176,7 @@ const start = async (server: FastifyInstance) => {
   try {
     server.setErrorHandler(fastifyErrorHandler)
     await server.listen({ port })
-    console.log(`Server listening at http://localhost:${port}/api/v1/ping`)
+    console.log(`Server listening at ${baseUrl}/api/v1/ping`)
   } catch (err) {
     console.log('Caught error', { err })
     server.log.error(err)

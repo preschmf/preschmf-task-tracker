@@ -13,7 +13,7 @@ const Tracker = () => {
 
   const boardListQuery = useQuery('board-list', {
     queryFn: () => {
-      return axios.get('/api/v1/board')
+      return axios.get('/api/v1/board', { withCredentials: true })
     },
     refetchOnWindowFocus: false,
   })

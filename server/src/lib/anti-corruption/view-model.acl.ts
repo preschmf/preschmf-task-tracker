@@ -27,3 +27,16 @@ export class BoardViewModelAcl {
     return domainModels.map(this.getBoard)
   }
 }
+
+export class UserViewModelAcl {
+  static getUser(domainModel: DomainModels.User): ViewModels.User {
+    return {
+      userId: domainModel.userId,
+      username: domainModel.username,
+    }
+  }
+
+  static getUserList(domainModels: DomainModels.User[]): ViewModels.User[] {
+    return domainModels.map(this.getUser)
+  }
+}
