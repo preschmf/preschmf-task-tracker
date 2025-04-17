@@ -1,35 +1,39 @@
 # Task Tracker
 
-This is a full-stack task tracker/todo list app. It is a monorepo app that uses: 
-* React and Typescript on the frontend, bundled with Webpack.
-* Fastify for the backend server, and SQLite for the database.
-* Jest for unit tests
+This is a full-stack task tracker/todo list app. It is a monorepo app that uses:
 
-The app uses [passport.js](https://www.passportjs.org/) to implement OAuth2.0 for authentication of a user with either GitHub, Google, or Facebook strategies. The user can then create boards and tasks on those boards. [Knex](https://knexjs.org/) is used to construct queries made to the [SQLite](https://sqlite.org/) database. Every board and task are stored in the database in order to persist data after each login. 
+- React and Typescript on the frontend, bundled with Webpack.
+- Fastify for the backend server, and SQLite for the database.
+- Jest for unit tests
+
+The app uses [passport.js](https://www.passportjs.org/) to implement OAuth2.0 for authentication of a user with either GitHub, Google, or Facebook strategies. The user can then create boards and tasks on those boards. [Knex](https://knexjs.org/) is used to construct queries made to the [SQLite](https://sqlite.org/) database. Every board and task are stored in the database in order to persist data after each login.
 
 ## Why this app?
+
 I created this app for three main reasons:
-* To get more practice with SQL databases
-* To explore implementing OAuth and using it to authenticate a user and persist data 
-* To explore creating, and maintaining, a monorepo project
+
+- To get more practice with SQL databases
+- To explore implementing OAuth and using it to authenticate a user and persist data
+- To explore creating, and maintaining, a monorepo project
 
 This app spiraled to quite a large size, larger than I thought a task tracking app with a DB would become. Along the way I worked through many quirks with the monorepo architecture. Mainly, managing the three separate package.jsons could become tricky. In addition, trying to keep the client and the server separate, sharing no code, took some forethought. One of the inspirations for making this project a monorepo came from my role at work. At the time, we were exploring turning our frontend webapp, and its experience API, into a monorepo. Ultimately, we decided not to, and I think some of the lessons I learned from this project informed that decision.
-
 
 ## Screenshots
 
 ### Login Page:
+
 ![image](https://github.com/user-attachments/assets/1fdbf0b2-48ca-4bc0-bd19-233af38a2134)
 
-### Boards Page with Task Creation: 
+### Boards Page with Task Creation:
+
 ![image](https://github.com/user-attachments/assets/cdeb8ad8-7879-4ea7-8024-e5b6a41c9a72)
 
 ### Boards Page with Board Creation Modal:
+
 ![image](https://github.com/user-attachments/assets/fd458953-4cec-4f52-9372-85a2f4c22a4a)
 
-
-
 ## Using the App
+
 ### Getting Started
 
 To get started with this repo, install each sub-projects dependencies:
@@ -74,4 +78,5 @@ import { greet } from 'shared/src/helpers'
 ```
 
 ### Postman
+
 A postman file exists to test the endpoints on the backend: [collection](https://github.com/preschmf/preschmf-task-tracker/blob/main/Task-Tracker.postman_collection.json)
