@@ -1,6 +1,6 @@
 # Task Tracker
 
-This is a full-stack task tracker/todo list app. It is a monorepo app that uses:
+This is a full-stack task tracker/todo list app. It is a shared monorepo app that uses:
 
 - A React and Typescript frontend, bundled with Webpack.
 - Fastify for the backend server, and SQLite for the database.
