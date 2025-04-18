@@ -1,10 +1,15 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebookF, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons'
+import { faLinkedinIn, faGithub, faGoogle } from '@fortawesome/free-brands-svg-icons'
 
 const LogInPage = () => {
-  const handleGitHubLogin = () => {
-    window.location.href = 'http://localhost:8080/api/v1/auth/github'
+  const handleLogin = (oAuthProvider: string) => {
+    const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:8080'
+    if (!serverUrl) {
+      console.error('REACT_APP_SERVER_URL is not defined')
+      return
+    }
+    window.location.href = `${serverUrl}/api/v1/auth/${oAuthProvider}`
   }
 
   return (
@@ -26,7 +31,7 @@ const LogInPage = () => {
                   className="btn btn-lg btn-block btn-primary mb-2"
                   style={{ backgroundColor: 'black', borderColor: 'black' }}
                   type="button"
-                  onClick={handleGitHubLogin}
+                  onClick={() => handleLogin('github')}
                 >
                   <FontAwesomeIcon icon={faGithub} className="me-2" /> Sign in with GitHub
                 </button>
@@ -34,7 +39,7 @@ const LogInPage = () => {
                   className="btn btn-lg btn-block btn-primary mb-2"
                   style={{ backgroundColor: '#dd4b39', borderColor: '#dd4b39' }}
                   type="button"
-                  disabled
+                  onClick={() => handleLogin('google')}
                 >
                   <FontAwesomeIcon icon={faGoogle} className="me-2" /> Sign in with Google
                 </button>
@@ -42,9 +47,9 @@ const LogInPage = () => {
                   className="btn btn-lg btn-block btn-primary mb-2"
                   style={{ backgroundColor: '#3b5998', borderColor: '#3b5998' }}
                   type="button"
-                  disabled
+                  onClick={() => handleLogin('linkedin')}
                 >
-                  <FontAwesomeIcon icon={faFacebookF} className="me-2" /> Sign in with Facebook
+                  <FontAwesomeIcon icon={faLinkedinIn} className="me-2" /> Sign in with LinkedIn
                 </button>
               </form>
             </div>

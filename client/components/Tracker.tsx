@@ -23,9 +23,25 @@ const Tracker = () => {
     setSelectedBoard(board)
   }
 
+  const logOut = async () => {
+    try {
+      const response = await axios.get('/api/v1/logout', { withCredentials: true })
+      if (response.status === 200) {
+        window.location.href = '/login'
+      }
+    } catch (error) {
+      console.error('Error logging out:', error)
+    }
+  }
+
   return (
     <>
-      <img src="/boards.png" alt="Boards" className="m-3" />
+      <div className="d-flex align-items-center justify-content-between">
+        <img src="/boards.png" alt="Boards" className="m-3" />
+        <Button className="me-3" variant="tertiary" onClick={logOut}>
+          Log out
+        </Button>
+      </div>
       <div className="d-flex flex-row">
         <div className="col-3 mx-3">
           <BoardList

@@ -21,7 +21,6 @@ const App = () => {
         withCredentials: true,
       })
       const data = response.data
-      console.log(data)
       setUser(data.user)
     }
     getUser()
@@ -31,7 +30,7 @@ const App = () => {
       <div style={backGroundStyle}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Tracker />} />
+            <Route path="/" element={user ? <Tracker /> : <Navigate to="/login" />} />
             <Route path="/login" element={user ? <Navigate to="/" /> : <LogInPage />} />
           </Routes>
         </BrowserRouter>
