@@ -2,11 +2,11 @@
 
 This is a full-stack task tracker/todo list app. It is a monorepo app that uses:
 
-- React and Typescript on the frontend, bundled with Webpack.
+- A React and Typescript frontend, bundled with Webpack.
 - Fastify for the backend server, and SQLite for the database.
 - Jest for unit tests
 
-The app uses [passport.js](https://www.passportjs.org/) to implement OAuth2.0 for authentication of a user with either GitHub, Google, or Facebook strategies. The user can then create boards and tasks on those boards. [Knex](https://knexjs.org/) is used to construct queries made to the [SQLite](https://sqlite.org/) database. Every board and task are stored in the database in order to persist data after each login.
+The app uses [passport.js](https://www.passportjs.org/) to implement OAuth2.0 for authentication of a user with either GitHub, Google, or LinkedIn strategies. The user can then create boards and tasks on those boards. [Knex](https://knexjs.org/) is used to construct queries made to the [SQLite](https://sqlite.org/) database. Every board and task are stored in the database in order to persist data after each login.
 
 ## Why this app?
 
