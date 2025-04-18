@@ -14,7 +14,7 @@ I created this app for three main reasons:
 
 - To get more practice with SQL databases
 - To explore implementing OAuth and using it to authenticate a user and persist data
-- To explore creating, and maintaining, a monorepo project
+- To explore creating, and maintaining, a shared monorepo project
 
 This app spiraled to quite a large size, larger than I thought a task tracking app with a DB would become. Along the way I worked through many quirks with the monorepo architecture. Mainly, managing the three separate package.jsons could become tricky. In addition, trying to keep the client and the server separate, sharing no code, took some forethought. One of the inspirations for making this project a monorepo came from my role at work. At the time, we were exploring turning our frontend webapp, and its experience API, into a monorepo. Ultimately, we decided not to, and I think some of the lessons I learned from this project informed that decision.
 
