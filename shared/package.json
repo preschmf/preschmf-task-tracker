@@ -13,7 +13,8 @@
     "test:client": "cd ../client && npm test",
     "start": "run-p start:server start:client",
     "start:server": "cd ../server && npm start",
-    "start:client": "cd ../client && npm start"
+    "start:client": "cd ../client && npm start",
+    "install:all": "npm i && cd ../client && npm i && cd ../server && npm i"
   },
   "author": "",
   "license": "ISC",
