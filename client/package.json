@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.tsx",
+  "engines": {
+    "node": "20.15.1"
+  },
   "scripts": {
     "test": "jest",
     "start": "webpack-dev-server .",

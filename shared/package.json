@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "20.15.1"
+  },
   "scripts": {
     "prepare": "cd .. && husky install .husky",
     "format-all:check": "cd .. && prettier --check .",
