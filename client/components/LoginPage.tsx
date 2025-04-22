@@ -4,7 +4,6 @@ import { faLinkedinIn, faGithub, faGoogle } from '@fortawesome/free-brands-svg-i
 
 const LogInPage = () => {
   const handleLogin = (oAuthProvider: string) => {
-    console.log('Server URL:', process.env.REACT_APP_SERVER_URL)
     const serverUrl = process.env.REACT_APP_SERVER_URL || 'http://localhost:8080'
     if (!serverUrl) {
       console.error('REACT_APP_SERVER_URL is not defined')
