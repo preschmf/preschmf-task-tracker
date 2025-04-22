@@ -10,7 +10,9 @@
     "test": "jest",
     "start": "ts-node-dev --respawn --transpile-only src/index.ts",
     "migrate": "knex migrate:latest --env local",
+    "migrate:prod": "knex migrate:latest --env production",
     "seed": "knex seed:run --env local",
+    "seed:prod": "knex seed:run --env peoduction",
     "coverage:show": "open-cli coverage/lcov-report/index.html"
   },
   "author": "",
