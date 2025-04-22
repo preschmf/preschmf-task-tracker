@@ -36,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env),
+      'process.env.REACT_APP_SERVER_URL': JSON.stringify(process.env.REACT_APP_SERVER_URL),
     }),
   ],
 }
