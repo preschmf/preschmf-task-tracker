@@ -38,7 +38,7 @@ const registerControllerAsRoute = (fastify: FastifyInstance, controller: RouteCo
 const start = async (server: FastifyInstance) => {
   try {
     server.setErrorHandler(fastifyErrorHandler)
-    await server.listen({ port })
+    await server.listen({ port, host: '0.0.0.0' })
     console.log(`Server listening at ${process.env.PORT || 'http://localhost:8080'}/api/v1`)
   } catch (err) {
     console.error(err)
