@@ -1,9 +1,14 @@
 import createKnex from 'knex'
 
 export const knex = createKnex({
-  client: 'sqlite3',
-  connection: {
-    filename: './task-tracker.local.sqlite3',
+  client: process.env.NODE_ENV === 'production' ? 'pg' : 'sqlite3',
+  connection:
+    process.env.NODE_ENV === 'production' ? process.env.DATABASE_URL : { filename: './task-tracker.local.sqlite3' },
+  useNullAsDefault: process.env.NODE_ENV !== 'production',
+  migrations: {
+    directory: './migrations',
   },
-  useNullAsDefault: true,
+  seeds: {
+    directory: './seeds',
+  },
 })

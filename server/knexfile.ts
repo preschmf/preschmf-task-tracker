@@ -14,6 +14,16 @@ export const config: { [key: string]: Knex.Config } = {
     },
     useNullAsDefault: true,
   },
+  production: {
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
+    migrations: {
+      directory: './migrations',
+    },
+    seeds: {
+      directory: './seeds',
+    },
+  },
 }
 
 module.exports = config
