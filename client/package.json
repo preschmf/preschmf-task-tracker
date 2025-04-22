@@ -10,7 +10,7 @@
     "test": "jest",
     "start": "webpack-dev-server .",
     "start:prod": "serve -s public",
-    "build": "webpack ."
+    "build": "REACT_APP_SERVER_URL=$REACT_APP_SERVER_URL webpack ."
   },
   "author": "",
   "license": "ISC",
