@@ -2,8 +2,10 @@ const path = require('path')
 const outputDirectory = path.resolve(__dirname, 'public')
 const webpack = require('webpack')
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 module.exports = {
-  mode: 'development',
+  mode: isProduction ? 'production' : 'development',
   entry: './index.tsx',
   output: {
     path: outputDirectory,
