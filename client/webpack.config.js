@@ -41,7 +41,7 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.REACT_APP_SERVER_URL': JSON.stringify('https://preschmf-task-tracker-production.up.railway.app'),
+      'process.env.REACT_APP_SERVER_URL': JSON.stringify('https://preschmf-task-tracker-api.up.railway.app'),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }),
   ],
