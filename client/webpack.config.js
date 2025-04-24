@@ -12,6 +12,9 @@ module.exports = {
     filename: 'main.js',
     publicPath: '/',
   },
+  stats: {
+    errorDetails: true,
+  },
   target: 'web',
   devServer: {
     port: '9000',
@@ -39,7 +42,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       'process.env.REACT_APP_SERVER_URL': JSON.stringify(process.env.REACT_APP_SERVER_URL),
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
     }),
   ],
 }
