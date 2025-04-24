@@ -5,5 +5,6 @@ export const registerCorsPlugin = (server: FastifyInstance, clientUrl: string) =
   server.register(fastifyCors, {
     origin: clientUrl,
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   })
 }
