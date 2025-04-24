@@ -13,13 +13,14 @@ import { boardRoutes } from './routes/board.routes'
 import { userRoutes } from './routes/user.routes'
 
 const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
+const clientUrl = process.env.CLIENT_URL || 'http://localhost:9000'
 
 export const initialize = async (server: FastifyInstance) => {
   registerSessionPlugin(server)
   registerPassportPlugin(server)
-  registerCorsPlugin(server)
+  registerCorsPlugin(server, clientUrl)
 
-  authRoutes(server, process.env.CLIENT_URL || 'http://localhost:9000')
+  authRoutes(server, clientUrl)
   boardRoutes(server)
   userRoutes(server)
   taskRoutes(server)

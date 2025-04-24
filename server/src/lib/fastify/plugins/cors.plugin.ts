@@ -1,10 +1,9 @@
 import fastifyCors from '@fastify/cors'
 import { FastifyInstance } from 'fastify'
 
-export const registerCorsPlugin = (server: FastifyInstance) => {
-  const frontendOrigin = process.env.CLIENT_URL || 'http://localhost:9000'
+export const registerCorsPlugin = (server: FastifyInstance, clientUrl: string) => {
   server.register(fastifyCors, {
-    origin: frontendOrigin,
+    origin: clientUrl,
     credentials: true,
   })
 }
