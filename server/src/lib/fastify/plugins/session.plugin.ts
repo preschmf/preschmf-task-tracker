@@ -1,5 +1,4 @@
 import fastifySecureSession from '@fastify/secure-session'
-import fs from 'fs'
 import { FastifyInstance } from 'fastify'
 
 export const registerSessionPlugin = (server: FastifyInstance) => {

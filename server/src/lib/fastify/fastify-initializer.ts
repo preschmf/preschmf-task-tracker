@@ -6,6 +6,7 @@ import { pingController, pingPath } from '../controller/ping.controller'
 import { fastifyErrorHandler } from './fastify-handlers'
 import { registerSessionPlugin } from './plugins/session.plugin'
 import { registerPassportPlugin } from './plugins/passport.plugin'
+import { registerCorsPlugin } from './plugins/cors.plugin'
 import { taskRoutes } from './routes/task.routes'
 import { authRoutes } from './routes/auth.routes'
 import { boardRoutes } from './routes/board.routes'
@@ -16,6 +17,7 @@ const port = process.env.PORT ? parseInt(process.env.PORT) : 8080
 export const initialize = async (server: FastifyInstance) => {
   registerSessionPlugin(server)
   registerPassportPlugin(server)
+  registerCorsPlugin(server)
 
   authRoutes(server, process.env.CLIENT_URL || 'http://localhost:9000')
   boardRoutes(server)

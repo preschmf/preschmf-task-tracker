@@ -28,6 +28,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@fastify/cors": "^11.0.1",
     "@fastify/passport": "^3.0.2",
     "@fastify/secure-session": "^8.1.1",
     "@types/passport-github2": "^1.2.9",
