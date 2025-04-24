@@ -14,6 +14,10 @@ export class TaskRepository {
     await this.knex.insert(task).into('task')
   }
 
+  async delete(taskId: DomainModels.Task['taskId']) {
+    await this.knex.delete().from('task').where('taskId', taskId)
+  }
+
   async get(taskId: DomainModels.Task['taskId']): Promise<DomainModels.Task> {
     const task = await this.knex.select('*').from<DomainModels.Task>('task').where('taskId', taskId).limit(1).first()
     if (!task) throw new NotFoundError('Task not found.')

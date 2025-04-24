@@ -54,6 +54,9 @@ const Tracker = () => {
           <Button className="col-12 mt-3" variant="primary" onClick={() => setIsCreateBoardModalOpen(true)}>
             Create Board
           </Button>
+          <Button className="col-12 mt-3" variant="danger" onClick={() => {}}>
+            Delete Board
+          </Button>
           <CreateBoardModal
             open={isCreateBoardModalOpen}
             onBoardCreated={onBoardCreated}

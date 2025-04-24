@@ -26,6 +26,14 @@ export class TaskService {
     return task
   }
 
+  async deleteTask(taskId: DomainModels.Task['taskId']) {
+    const task = await this.taskRepository.get(taskId)
+    if (!task) throw new BadRequestError('Task not found.')
+    if (task.status === DomainModels.TaskStatus.notComplete)
+      throw new BadRequestError('Task must be complete to delete.')
+    await this.taskRepository.delete(taskId)
+  }
+
   async completeTask(taskId: DomainModels.Task['taskId']) {
     const task = await this.taskRepository.get(taskId)
     if (isComplete(task)) throw new BadRequestError('Task is already complete.')
