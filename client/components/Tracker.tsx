@@ -1,4 +1,4 @@
-import axios from 'axios'
+import taskTrackerApi from '../src/utils/taskTrackerApi'
 import { useQuery } from 'react-query'
 import React, { useState } from 'react'
 import TaskList from './TaskList'
@@ -13,7 +13,7 @@ const Tracker = () => {
 
   const boardListQuery = useQuery('board-list', {
     queryFn: () => {
-      return axios.get('/api/v1/board', { withCredentials: true })
+      return taskTrackerApi.get('/api/v1/board')
     },
     refetchOnWindowFocus: false,
   })
@@ -25,7 +25,7 @@ const Tracker = () => {
 
   const logOut = async () => {
     try {
-      const response = await axios.get('/api/v1/logout', { withCredentials: true })
+      const response = await taskTrackerApi.get('/api/v1/logout')
       if (response.status === 200) {
         window.location.href = '/login'
       }

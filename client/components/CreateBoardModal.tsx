@@ -2,7 +2,7 @@ import Form from 'react-bootstrap/Form'
 import Spinner from 'react-bootstrap/Spinner'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import axios from 'axios'
+import taskTrackerApi from '../src/utils/taskTrackerApi'
 import React, { useState } from 'react'
 import { ViewModels } from 'shared/src/view-model'
 
@@ -68,6 +68,6 @@ interface CreateBoardResponse {
 }
 
 const createBoard = async (title: string): Promise<CreateBoardResponse> => {
-  const response = await axios.post('/api/v1/board', { title, withCredentials: true })
+  const response = await taskTrackerApi.post('/api/v1/board', { title })
   return response.data
 }

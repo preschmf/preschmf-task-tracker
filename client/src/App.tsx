@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Tracker from '../components/Tracker'
 import LogInPage from '../components/LoginPage'
-import axios from 'axios'
+import taskTrackerApi from './utils/taskTrackerApi'
 import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
@@ -16,9 +16,8 @@ const App = () => {
   const [user, setUser] = useState(null)
   useEffect(() => {
     const getUser = async () => {
-      const response = await axios.get('/api/v1/login/success', {
+      const response = await taskTrackerApi.get('/api/v1/login/success', {
         method: 'GET',
-        withCredentials: true,
       })
       const data = response.data
       setUser(data.user)

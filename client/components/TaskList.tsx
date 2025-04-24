@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import CreateTaskInput from './CreateTaskInput'
 import Task from './Task'
-import axios from 'axios'
+import taskTrackerApi from '../src/utils/taskTrackerApi'
 import { ViewModels } from '../../shared/src/view-model'
 
 const TaskList = ({ board }: { board: ViewModels.Board }) => {
@@ -13,7 +13,7 @@ const TaskList = ({ board }: { board: ViewModels.Board }) => {
 
   const taskListQuery = useQuery({
     queryFn: () => {
-      return axios.get(`/api/v1/board/${board?.boardId}/task`, { withCredentials: true })
+      return taskTrackerApi.get(`/api/v1/board/${board?.boardId}/task`)
     },
     refetchOnWindowFocus: false,
     queryKey: ['task-list', board?.boardId],
@@ -21,10 +21,9 @@ const TaskList = ({ board }: { board: ViewModels.Board }) => {
 
   const createTaskMutation = useMutation({
     mutationFn: (title: string) => {
-      return axios.post(`/api/v1/board/${board.boardId}/task`, {
+      return taskTrackerApi.post(`/api/v1/board/${board.boardId}/task`, {
         title,
         status: ViewModels.TaskStatus.notComplete,
-        withCredentials: true,
       })
     },
   })
@@ -32,9 +31,9 @@ const TaskList = ({ board }: { board: ViewModels.Board }) => {
   const changeTaskStatusMutation = useMutation({
     mutationFn: (task: ViewModels.Task) => {
       if (task.status === ViewModels.TaskStatus.notComplete) {
-        return axios.patch(`/api/v1/task/${task.taskId}/complete`, { withCredentials: true })
+        return taskTrackerApi.patch(`/api/v1/task/${task.taskId}/complete`)
       } else if (task.status === ViewModels.TaskStatus.complete) {
-        return axios.patch(`/api/v1/task/${task.taskId}/uncomplete`, { withCredentials: true })
+        return taskTrackerApi.patch(`/api/v1/task/${task.taskId}/uncomplete`)
       }
       throw new Error('task status is invalid or could not be retrieved')
     },
