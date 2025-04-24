@@ -17,6 +17,7 @@
     "start": "run-p start:server start:client",
     "start:server": "cd ../server && npm start",
     "start:client": "cd ../client && npm start",
+    "build:client": "cd ../client && npm run build",
     "install:all": "npm i --legacy-peer-deps && cd ../client && npm i && cd ../server && npm i"
   },
   "author": "",
