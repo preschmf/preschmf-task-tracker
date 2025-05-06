@@ -1,34 +1,19 @@
 import { mockObject } from 'shared/src/test-helpers'
 import { boardRepository, BoardRepository } from '../../data-access/board.repository'
 import { DomainModels } from '../../domain-model'
-import * as sessionHelpers from '../../helpers/session.helpers'
-import { boardListController, createBoardListController } from './board-list.controller'
+import { boardListController } from './board-list.controller'
+import { FastifyRequest } from 'fastify'
 
 const user = {
   userId: 'dummy-userId',
+  id: 'dummy-id',
+  username: 'dummy-username',
+  createdAt: new Date().toISOString(),
 } as DomainModels.User
 const boards = [
   { boardId: 'board-a', title: 'Board A' },
   { boardId: 'board-b', title: 'Board B' },
 ] as DomainModels.Board[]
-
-describe('createBoardListController()', () => {
-  it('should retrieve the boards for the current user', async () => {
-    // arrange
-    const getCurrentUser = jest.fn().mockResolvedValueOnce(user)
-    const boardRepository = mockObject<BoardRepository>(['findAllByUser'])
-    boardRepository.findAllByUser.mockResolvedValueOnce(boards)
-
-    // act
-    const boardListController = createBoardListController(getCurrentUser, boardRepository)
-    const response = await boardListController()
-
-    // assert
-    expect(response).toEqual({ boards })
-    expect(getCurrentUser).toHaveBeenCalledWith()
-    expect(boardRepository.findAllByUser).toHaveBeenCalledWith(user.userId)
-  })
-})
 
 describe('boardListController()', () => {
   afterEach(() => {
@@ -38,14 +23,12 @@ describe('boardListController()', () => {
   it('should retrieve a list of boards', async () => {
     // arrange
     const getCurrentUserSpy = jest
-      .spyOn(sessionHelpers, 'getCurrentUser')
-      .mockImplementationOnce(() => Promise.resolve(user))
-    const findAllByUserSpy = jest
-      .spyOn(boardRepository, 'findAllByUser')
-      .mockImplementationOnce(() => Promise.resolve(boards))
-
+    const findAllByUserSpy = jest.spyOn(boardRepository, 'findAllByUser')
     // act
-    const response = await boardListController()
+    const request = {
+      user,
+    } as unknown as FastifyRequest
+    const response = await boardListController(request)
 
     // assert
     expect(response).toEqual({ boards })

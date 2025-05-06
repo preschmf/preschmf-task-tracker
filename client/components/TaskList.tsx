@@ -39,10 +39,16 @@ const TaskList = ({ board }: { board: ViewModels.Board }) => {
     },
   })
 
+  const deleteTaskMutation = useMutation({
+    mutationFn: (task: ViewModels.Task) => {
+      return taskTrackerApi.delete(`/api/v1/task/${task.taskId}`)
+    },
+  })
+
   useEffect(() => {
     taskListQuery.refetch()
     setShowTaskInput(false)
-  }, [createTaskMutation.isSuccess, changeTaskStatusMutation.isSuccess])
+  }, [createTaskMutation.isSuccess, changeTaskStatusMutation.isSuccess, deleteTaskMutation.isSuccess])
 
   if (taskListQuery.isLoading) {
     return (
@@ -70,7 +76,14 @@ const TaskList = ({ board }: { board: ViewModels.Board }) => {
           </p>
         )}
         {taskListQuery.data?.data.tasks.map((task: ViewModels.Task) => {
-          return <Task key={task.taskId} task={task} changeTaskStatusMutation={changeTaskStatusMutation}></Task>
+          return (
+            <Task
+              key={task.taskId}
+              task={task}
+              changeTaskStatusMutation={changeTaskStatusMutation}
+              deleteTaskMutation={deleteTaskMutation}
+            ></Task>
+          )
         })}
         {!showTaskInput && (
           <Button

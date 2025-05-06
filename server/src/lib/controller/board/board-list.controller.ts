@@ -6,7 +6,6 @@ import { boardRepository } from '../../data-access/board.repository'
 export const boardListPath = '/api/v1/board'
 
 export const boardListController = async (request: FastifyRequest) => {
-  //figure out if this is required
   if (!request.user) {
     throw new Error('User is not authenticated')
   }

@@ -1,10 +1,8 @@
 import { FastifyInstance } from 'fastify'
-import { boardCreateController } from '../../controller/board/board-create.controller'
-import { boardListController } from '../../controller/board/board-list.controller'
+import { boardCreateController, boardCreatePath } from '../../controller/board/board-create.controller'
+import { boardListController, boardListPath } from '../../controller/board/board-list.controller'
+import { boardDeleteController, boardDeletePath } from '../../controller/board/board-delete.controller'
 import ensureAuthenticated from '../../helpers/ensureAuthenticated'
-
-const boardListPath = '/api/v1/board'
-const boardCreatePath = '/api/v1/board'
 
 export const boardRoutes = (server: FastifyInstance) => {
   server.get(
@@ -21,5 +19,12 @@ export const boardRoutes = (server: FastifyInstance) => {
       preValidation: ensureAuthenticated,
     },
     boardCreateController
+  )
+  server.delete(
+    boardDeletePath,
+    {
+      preValidation: ensureAuthenticated,
+    },
+    boardDeleteController
   )
 }

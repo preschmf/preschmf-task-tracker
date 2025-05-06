@@ -8,19 +8,15 @@ import { ViewModels } from 'shared/src/view-model'
 
 interface CreateBoardModalProps {
   open: boolean
-  onBoardCreated: (board: ViewModels.Board) => void
+  createBoardMutation: any
   onClose: () => void
 }
 
-export const CreateBoardModal = ({ open, onBoardCreated, onClose }: CreateBoardModalProps) => {
+export const CreateBoardModal = ({ open, createBoardMutation, onClose }: CreateBoardModalProps) => {
   const [title, setTitle] = useState<string>('')
-  const [isCreating, setIsCreating] = useState<boolean>(false)
 
   const onCreateClick = async () => {
-    setIsCreating(true)
-    const response = await createBoard(title)
-    setIsCreating(false)
-    onBoardCreated(response.board)
+    createBoardMutation.mutate(title)
     onClose()
   }
 
@@ -33,7 +29,6 @@ export const CreateBoardModal = ({ open, onBoardCreated, onClose }: CreateBoardM
       dialogtitle="Create Board"
       onShow={async () => {
         setTitle('')
-        setIsCreating(false)
       }}
       className="d-inline-flex"
     >
@@ -43,19 +38,19 @@ export const CreateBoardModal = ({ open, onBoardCreated, onClose }: CreateBoardM
           type="text"
           id="inputBoardName"
           value={title}
-          disabled={isCreating}
+          disabled={createBoardMutation.isLoading}
           onChange={(e) => {
             setTitle(e.target.value)
           }}
           className="mb-2"
         />
-        <Button variant="primary" disabled={isCreating || !title} onClick={onCreateClick}>
-          {isCreating && <Spinner animation="border" variant="primary" />}
+        <Button variant="primary" disabled={createBoardMutation.isLoading || !title} onClick={onCreateClick}>
+          {createBoardMutation.isLoading && <Spinner animation="border" variant="primary" />}
           Create
         </Button>
         &nbsp;
-        <Button variant="outline-danger" disabled={isCreating} onClick={() => onClose()}>
-          {isCreating && <Spinner animation="border" variant="primary" />}
+        <Button variant="outline-danger" disabled={createBoardMutation.isLoading} onClick={() => onClose()}>
+          {createBoardMutation.isLoading && <Spinner animation="border" variant="primary" />}
           Cancel
         </Button>
       </div>

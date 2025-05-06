@@ -12,18 +12,12 @@ interface BoardListProps {
 }
 
 const BoardList = ({ isLoading, isError, boards, selectBoard, currentBoard }: BoardListProps) => {
-  useEffect(() => {
-    if (boards?.length > 0 && !currentBoard) {
-      selectBoard(boards[0])
-    }
-  }, [boards, currentBoard, selectBoard])
-
   if (isLoading) {
     return <Spinner animation="border" variant="primary" />
   }
 
   if (isError) {
-    return <h2>Error</h2>
+    return <h2>Error Loading Boards</h2>
   }
 
   return (
