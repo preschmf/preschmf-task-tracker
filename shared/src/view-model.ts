@@ -8,6 +8,7 @@ export namespace ViewModels {
     taskId: string
     title: string
     status: TaskStatus
+    createdAt: string
   }
 
   export interface Board {

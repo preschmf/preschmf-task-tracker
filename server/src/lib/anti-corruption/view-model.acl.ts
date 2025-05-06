@@ -7,6 +7,7 @@ export class TaskViewModelAcl {
       taskId: domainModel.taskId,
       title: domainModel.title,
       status: domainModel.status,
+      createdAt: domainModel.createdAt,
     }
   }
 

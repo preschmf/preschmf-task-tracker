@@ -61,8 +61,3 @@ export const CreateBoardModal = ({ open, createBoardMutation, onClose }: CreateB
 interface CreateBoardResponse {
   board: ViewModels.Board
 }
-
-const createBoard = async (title: string): Promise<CreateBoardResponse> => {
-  const response = await taskTrackerApi.post('/api/v1/board', { title })
-  return response.data
-}

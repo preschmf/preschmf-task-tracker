@@ -8,6 +8,10 @@ import Task from './Task'
 import taskTrackerApi from '../src/utils/taskTrackerApi'
 import { ViewModels } from '../../shared/src/view-model'
 
+const sortTasksDate = (a: ViewModels.Task, b: ViewModels.Task) => {
+  return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+}
+
 const TaskList = ({ board }: { board: ViewModels.Board }) => {
   const [showTaskInput, setShowTaskInput] = useState<boolean>(false)
 
@@ -75,16 +79,18 @@ const TaskList = ({ board }: { board: ViewModels.Board }) => {
             <i>No tasks found. Create a new task.</i>
           </p>
         )}
-        {taskListQuery.data?.data.tasks.map((task: ViewModels.Task) => {
-          return (
-            <Task
-              key={task.taskId}
-              task={task}
-              changeTaskStatusMutation={changeTaskStatusMutation}
-              deleteTaskMutation={deleteTaskMutation}
-            ></Task>
-          )
-        })}
+        {taskListQuery.data?.data.tasks
+          .sort((a, b) => sortTasksDate(a, b))
+          .map((task: ViewModels.Task) => {
+            return (
+              <Task
+                key={task.taskId}
+                task={task}
+                changeTaskStatusMutation={changeTaskStatusMutation}
+                deleteTaskMutation={deleteTaskMutation}
+              ></Task>
+            )
+          })}
         {!showTaskInput && (
           <Button
             onClick={() => {
