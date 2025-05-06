@@ -1,6 +1,6 @@
 import taskTrackerApi from '../src/utils/taskTrackerApi'
-import { useQuery } from 'react-query'
-import React, { useState } from 'react'
+import { useQuery, useMutation } from 'react-query'
+import React, { useEffect, useState } from 'react'
 import TaskList from './TaskList'
 import BoardList from './BoardList'
 import { ViewModels } from 'shared/src/view-model'
@@ -18,9 +18,34 @@ const Tracker = () => {
     refetchOnWindowFocus: false,
   })
 
-  const onBoardCreated = (board: ViewModels.Board) => {
+  const deleteBoardMutation = useMutation({
+    mutationFn: () => {
+      return taskTrackerApi.delete(`/api/v1/board/${selectedBoard?.boardId}`)
+    },
+  })
+
+  const createBoardMutation = useMutation({
+    mutationFn: (title: string) => {
+      return taskTrackerApi.post('/api/v1/board', {
+        title,
+      })
+    },
+  })
+
+  useEffect(() => {
     boardListQuery.refetch()
-    setSelectedBoard(board)
+  }, [deleteBoardMutation.isSuccess, createBoardMutation.isSuccess])
+
+  useEffect(() => {
+    if (boardListQuery.data?.data.boards.length > 0) {
+      setSelectedBoard(boardListQuery.data?.data.boards[0])
+    } else {
+      setSelectedBoard(undefined)
+    }
+  }, [deleteBoardMutation.isSuccess, boardListQuery.isSuccess])
+
+  const onDeleteBoardClick = async () => {
+    deleteBoardMutation.mutate()
   }
 
   const logOut = async () => {
@@ -54,12 +79,12 @@ const Tracker = () => {
           <Button className="col-12 mt-3" variant="primary" onClick={() => setIsCreateBoardModalOpen(true)}>
             Create Board
           </Button>
-          <Button className="col-12 mt-3" variant="danger" onClick={() => {}}>
-            Delete Board
+          <Button className="col-12 mt-3" variant="danger" onClick={onDeleteBoardClick}>
+            {deleteBoardMutation.isLoading ? 'Deleting Board...' : 'Delete Board'}
           </Button>
           <CreateBoardModal
             open={isCreateBoardModalOpen}
-            onBoardCreated={onBoardCreated}
+            createBoardMutation={createBoardMutation}
             onClose={() => setIsCreateBoardModalOpen(false)}
           />
         </div>

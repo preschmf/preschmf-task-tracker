@@ -41,6 +41,7 @@ export namespace Responses {
   }
 
   export interface DeleteTaskResponse extends GenericResponse {}
+  export interface DeleteBoardResponse extends GenericResponse {}
 
   export interface CreateUserResponse {
     user: ViewModels.User
