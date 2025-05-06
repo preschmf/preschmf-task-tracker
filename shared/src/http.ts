@@ -11,6 +11,8 @@ export namespace Requests {
     scheduledDate?: string
   }
 
+  export interface DeleteTaskRequest extends CreateTaskRequest {}
+
   export interface CreateUserRequest {
     username: string
     profileId: string
@@ -37,6 +39,8 @@ export namespace Responses {
   export interface CreateTaskResponse {
     task: ViewModels.Task
   }
+
+  export interface DeleteTaskResponse extends GenericResponse {}
 
   export interface CreateUserResponse {
     user: ViewModels.User
