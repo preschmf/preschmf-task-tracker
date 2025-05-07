@@ -22,6 +22,16 @@ const Tracker = () => {
     mutationFn: () => {
       return taskTrackerApi.delete(`/api/v1/board/${selectedBoard?.boardId}`)
     },
+    onSettled: () => {
+      boardListQuery.refetch().then((result) => {
+        const updatedBoards = result.data?.data.boards
+        if (updatedBoards && updatedBoards.length > 0) {
+          setSelectedBoard(updatedBoards[0])
+        } else {
+          setSelectedBoard(undefined)
+        }
+      })
+    },
   })
 
   const createBoardMutation = useMutation({
@@ -30,19 +40,10 @@ const Tracker = () => {
         title,
       })
     },
+    onSuccess: () => {
+      boardListQuery.refetch()
+    },
   })
-
-  useEffect(() => {
-    boardListQuery.refetch()
-  }, [deleteBoardMutation.isSuccess, createBoardMutation.isSuccess])
-
-  useEffect(() => {
-    if (boardListQuery.data?.data.boards.length > 0) {
-      setSelectedBoard(boardListQuery.data?.data.boards[0])
-    } else {
-      setSelectedBoard(undefined)
-    }
-  }, [deleteBoardMutation.isSuccess, boardListQuery.isSuccess])
 
   const onDeleteBoardClick = async () => {
     deleteBoardMutation.mutate()
@@ -88,7 +89,7 @@ const Tracker = () => {
             onClose={() => setIsCreateBoardModalOpen(false)}
           />
         </div>
-        {selectedBoard && <TaskList board={selectedBoard} />}
+        {selectedBoard ? <TaskList board={selectedBoard} /> : null}
       </div>
     </>
   )
