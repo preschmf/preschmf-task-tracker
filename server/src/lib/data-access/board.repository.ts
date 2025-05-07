@@ -26,6 +26,7 @@ export class BoardRepository {
   }
 
   async delete(boardId: DomainModels.Board['boardId']) {
+    await this.knex.delete().from('task').where('boardId', boardId)
     await this.knex.delete().from('board').where('boardId', boardId)
   }
 }
