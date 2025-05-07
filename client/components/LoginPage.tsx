@@ -43,6 +43,8 @@ const LogInPage = () => {
                 >
                   <FontAwesomeIcon icon={faGoogle} className="me-2" /> Sign in with Google
                 </button>
+
+                {/* Passport plugin is not maintained, add back in when fixed
                 <button
                   className="btn btn-lg btn-block btn-primary mb-2"
                   style={{ backgroundColor: '#3b5998', borderColor: '#3b5998' }}
@@ -50,7 +52,7 @@ const LogInPage = () => {
                   onClick={() => handleLogin('linkedin')}
                 >
                   <FontAwesomeIcon icon={faLinkedinIn} className="me-2" /> Sign in with LinkedIn
-                </button>
+                </button> */}
               </form>
             </div>
           </div>
